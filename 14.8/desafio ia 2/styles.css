@@ -1,0 +1,97 @@
+/* ===== Reset básico ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+}
+
+/* ===== Layout con CSS Grid ===== */
+body {
+  display: grid;
+  grid-template-columns: 200px 1fr;   /* aside fijo + main flexible */
+  grid-template-rows: auto 1fr auto;  /* header / contenido / footer */
+  grid-template-areas:
+    "header header"
+    "aside  main"
+    "footer footer";
+  min-height: 100vh;
+}
+
+/* ===== Asignación de áreas ===== */
+.header {
+  grid-area: header;
+}
+
+.aside {
+  grid-area: aside;
+}
+
+.main {
+  grid-area: main;
+}
+
+.footer {
+  grid-area: footer;
+}
+
+/* ===== Colores distintos para cada sección ===== */
+.header {
+  background-color: #264653;
+  color: #fff;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.aside {
+  background-color: #2a9d8f;
+  color: #fff;
+  padding: 1.5rem;
+}
+
+.aside ul {
+  list-style: none;
+  margin-top: 1rem;
+}
+
+.aside li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.main {
+  background-color: #e9c46a;
+  color: #264653;
+  padding: 1.5rem;
+}
+
+.footer {
+  background-color: #e76f51;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* ===== Responsive: Tablet ===== */
+@media (max-width: 768px) {
+  body {
+    grid-template-columns: 150px 1fr;
+  }
+}
+
+/* ===== Responsive: Móvil ===== */
+@media (max-width: 600px) {
+  body {
+    grid-template-columns: 1fr;      /* una sola columna */
+    grid-template-rows: auto auto auto auto;
+    grid-template-areas:
+      "header"
+      "main"
+      "aside"
+      "footer";
+  }
+}
