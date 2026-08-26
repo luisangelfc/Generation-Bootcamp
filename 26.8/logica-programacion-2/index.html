@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Conversor de Temperatura</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 480px;
+    margin: 60px auto;
+    background: #f4f6f8;
+    color: #222;
+  }
+  .card {
+    background: #fff;
+    padding: 24px 28px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  h1 { font-size: 1.4rem; margin-top: 0; }
+  input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  button {
+    padding: 10px 18px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  button:hover { background: #1d4ed8; }
+  #resultado {
+    margin-top: 18px;
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+  #error {
+    color: #b91c1c;
+    margin-top: 8px;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>Conversor de Celsius a Fahrenheit y Kelvin</h1>
+    <label for="celsius">Ingrese temperatura en °C:</label>
+    <input type="text" id="celsius" placeholder="Ej: 45">
+    <button onclick="convertir()">Convertir</button>
+    <div id="error"></div>
+    <div id="resultado"></div>
+  </div>
+
+<script>
+  // Función principal que valida y convierte
+  function convertir() {
+    const input = document.getElementById("celsius");
+    const errorDiv = document.getElementById("error");
+    const resultadoDiv = document.getElementById("resultado");
+
+    const valor = input.value.trim();
+    errorDiv.textContent = "";
+    resultadoDiv.textContent = "";
+
+    // Validar que sea un número
+    if (valor === "" || isNaN(valor)) {
+      errorDiv.textContent = "Error: debe ingresar un valor numérico. Intente de nuevo.";
+      input.value = "";
+      input.focus();
+      return;
+    }
+
+    const celsius = Number(valor);
+    const { kelvin, fahrenheit } = convertirTemperatura(celsius);
+
+    resultadoDiv.innerHTML =
+      `Grados Kelvin: ${kelvin.toFixed(2)}<br>` +
+      `Grados Fahrenheit: ${fahrenheit.toFixed(2)}`;
+  }
+
+  // Función pura de conversión (reutilizable, ej. para pruebas por consola)
+  function convertirTemperatura(celsius) {
+    const kelvin = celsius + 273.15;
+    const fahrenheit = (celsius * 9 / 5) + 32;
+    return { kelvin, fahrenheit };
+  }
+
+  // ---------- Versión por consola (prompt) ----------
+  // Si se ejecuta este archivo en un entorno con "prompt" (navegador),
+  // se puede llamar a esta función en lugar de usar el formulario HTML.
+  function pedirTemperaturaPorPrompt() {
+    let celsius;
+    let valido = false;
+
+    while (!valido) {
+      const entrada = prompt("Ingrese la temperatura en grados Celsius:");
+
+      // Si el usuario cancela el prompt
+      if (entrada === null) {
+        console.log("Operación cancelada por el usuario.");
+        return;
+      }
+
+      if (entrada.trim() === "" || isNaN(entrada)) {
+        alert("Error: debe ingresar un valor numérico. Intente de nuevo.");
+        continue;
+      }
+
+      celsius = Number(entrada);
+      valido = true;
+    }
+
+    const { kelvin, fahrenheit } = convertirTemperatura(celsius);
+    console.log(`Grados Kelvin: ${kelvin.toFixed(2)}`);
+    console.log(`Grados Fahrenheit: ${fahrenheit.toFixed(2)}`);
+    alert(`Grados Kelvin: ${kelvin.toFixed(2)}\nGrados Fahrenheit: ${fahrenheit.toFixed(2)}`);
+  }
+
+  // Descomentar la siguiente línea para usar la versión por prompt al cargar la página:
+  // pedirTemperaturaPorPrompt();
+
+  // ---------- Pruebas automáticas en consola ----------
+  console.log("=== Pruebas ===");
+  console.log("Entrada: 45 °C");
+  let prueba1 = convertirTemperatura(45);
+  console.log(`Grados Kelvin: ${prueba1.kelvin.toFixed(2)}`);       // 318.15
+  console.log(`Grados Fahrenheit: ${prueba1.fahrenheit.toFixed(2)}`); // 113.00
+
+  console.log("Entrada: 14 °C");
+  let prueba2 = convertirTemperatura(14);
+  console.log(`Grados Kelvin: ${prueba2.kelvin.toFixed(2)}`);       // 287.15
+  console.log(`Grados Fahrenheit: ${prueba2.fahrenheit.toFixed(2)}`); // 57.20
+</script>
+</body>
+</html>
