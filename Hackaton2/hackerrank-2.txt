@@ -1,0 +1,28 @@
+import java.util.*;
+import java.io.*;
+
+class Solution{
+    public static void main(String []argh){
+        Scanner in = new Scanner(System.in);
+        int t=in.nextInt();
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<t;i++){
+            int a = in.nextInt();
+            int b = in.nextInt();
+            int n = in.nextInt();
+            
+            long power = 1; // 2^0
+            long sum = 0;   // suma acumulada de potencias de 2
+            for(int j=0; j<n; j++){
+                sum += power;
+                long term = a + b*sum;
+                sb.append(term);
+                if(j != n-1) sb.append(" ");
+                power *= 2;
+            }
+            sb.append("\n");
+        }
+        System.out.print(sb);
+        in.close();
+    }
+}
